@@ -1,4 +1,4 @@
-AddEventListener('toll_newguid', function (payload) {
+AddEventListener('replace_text_id', function (payload) {
     replaceSelectedText(document.activeElement, payload);
 });
 
