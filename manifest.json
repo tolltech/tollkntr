@@ -8,8 +8,15 @@
       "default_icon": "icons/chrome.png",
       "default_popup": "popup.html"
   },
+  "permissions": [
+    "contextMenus"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "icons": {
-    "48": "icon48_2.png"
+    "48": "icon48_2.png",
+    "16": "icon.png"
   },
   "content_scripts": [{
     "matches": [
