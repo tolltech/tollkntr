@@ -2,7 +2,7 @@ var NewGuidId = "NewGuidId";
 var NewIpInn = "NewIpInn";
 var NewUlInn = "NewUlInn";
 var NewHeadKpp = "NewHeadKpp";
-
+var ReplaceTextEventId = "replace_text_id";
 
 function SendMessageToExtension(eventType, payload, callback) {
     chrome.runtime.sendMessage({ type: eventType, payload: payload }, callback);
@@ -14,46 +14,61 @@ function SendMessageToCurrentActiveTab(eventType, payload, callback) {
     });
 }
 
-chrome.runtime.onInstalled.addListener(async () => {
-    chrome.contextMenus.create({
-        id: 'toll_parent',
-        title: 'TollKntr',
-        type: 'normal',
-        contexts: ['editable']
-    });
+function AddEventListener(eventType, action) {
+    chrome.runtime.onMessage.addListener(
+        function (request, sender, sendResponse) {
+            if (!request.type || request.type != eventType) {
+                return;
+            }
 
-    chrome.contextMenus.create({
-        id: NewGuidId,
-        title: 'new guid',
-        type: 'normal',
-        contexts: ['editable'],
-        parentId: "toll_parent"
-    });
+            action(request.payload);
+        });
+}
 
-    chrome.contextMenus.create({
-        id: NewIpInn,
-        title: 'new ip inn',
-        type: 'normal',
-        contexts: ['editable'],
-        parentId: "toll_parent"
-    });
+var notCreateMenu = notCreateMenu || false;
+if (!notCreateMenu) {
 
-    chrome.contextMenus.create({
-        id: NewUlInn,
-        title: 'new ul inn',
-        type: 'normal',
-        contexts: ['editable'],
-        parentId: "toll_parent"
-    });
+    chrome.runtime.onInstalled.addListener(async () => {
+        chrome.contextMenus.create({
+            id: 'toll_parent',
+            title: 'TollKntr',
+            type: 'normal',
+            contexts: ['editable']
+        });
 
-    chrome.contextMenus.create({
-        id: NewHeadKpp,
-        title: 'new kpp',
-        type: 'normal',
-        contexts: ['editable'],
-        parentId: "toll_parent"
+        chrome.contextMenus.create({
+            id: NewGuidId,
+            title: 'new guid',
+            type: 'normal',
+            contexts: ['editable'],
+            parentId: "toll_parent"
+        });
+
+        chrome.contextMenus.create({
+            id: NewIpInn,
+            title: 'new ip inn',
+            type: 'normal',
+            contexts: ['editable'],
+            parentId: "toll_parent"
+        });
+
+        chrome.contextMenus.create({
+            id: NewUlInn,
+            title: 'new ul inn',
+            type: 'normal',
+            contexts: ['editable'],
+            parentId: "toll_parent"
+        });
+
+        chrome.contextMenus.create({
+            id: NewHeadKpp,
+            title: 'new kpp',
+            type: 'normal',
+            contexts: ['editable'],
+            parentId: "toll_parent"
+        });
     });
-});
+}
 
 function uuidv4() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
@@ -113,26 +128,24 @@ function getIPInn() {
     return inn + checkSum1 + checkSum2;
 }
 
-function getHeadKpp()
-    {
-        while (true)
-        {
-            var kpp = getDigitString(4);
-            if (kpp.substring(0,2) == '00')
-            {
-                continue;
-            }
-
-            return kpp + "01" + getDigitString(3);
+function getHeadKpp() {
+    while (true) {
+        var kpp = getDigitString(4);
+        if (kpp.substring(0, 2) == '00') {
+            continue;
         }
-    }
 
-
-chrome.contextMenus.onClicked.addListener((item, tab) => {
-    switch (item.menuItemId) {
-        case NewGuidId: SendMessageToCurrentActiveTab('replace_text_id', uuidv4()); break;
-        case NewIpInn: SendMessageToCurrentActiveTab('replace_text_id', getIPInn()); break;
-        case NewUlInn: SendMessageToCurrentActiveTab('replace_text_id', getULInn()); break;
-        case NewHeadKpp: SendMessageToCurrentActiveTab('replace_text_id', getHeadKpp()); break;
+        return kpp + "01" + getDigitString(3);
     }
-});
+}
+
+if (!notCreateMenu) {
+    chrome.contextMenus.onClicked.addListener((item, tab) => {
+        switch (item.menuItemId) {
+            case NewGuidId: SendMessageToCurrentActiveTab(ReplaceTextEventId, uuidv4()); break;
+            case NewIpInn: SendMessageToCurrentActiveTab(ReplaceTextEventId, getIPInn()); break;
+            case NewUlInn: SendMessageToCurrentActiveTab(ReplaceTextEventId, getULInn()); break;
+            case NewHeadKpp: SendMessageToCurrentActiveTab(ReplaceTextEventId, getHeadKpp()); break;
+        }
+    });
+}

@@ -27,14 +27,15 @@
      "*://jhub.skbkontur.ru/hub/auth/login*",
      "*://yt-elba.skbkontur.ru/hub/hub/auth/login*"
     ],
-    "js":      ["jquery.js", "common.js", "constants.js", "triggerLogin.js"]
+    "js":      ["jquery.js", "constants.js", "background.js", "triggerLogin.js"]
   },
   {
     "matches": [
       "*://*.skbkontur.ru/*",
+      "*://*.kontur.ru/*",
      "*://*.testkontur.ru/*"
     ],
-    "js":      ["jquery.js", "common.js", "constants.js", "triggerHelper.js"]
+    "js":      ["jquery.js", "constants.js", "background.js", "triggerHelper.js"]
   }
 ],
   "content_security_policy": {
