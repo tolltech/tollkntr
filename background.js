@@ -4,29 +4,38 @@ var NewUlInn = "NewUlInn";
 var NewHeadKpp = "NewHeadKpp";
 var ReplaceTextEventId = "replace_text_id";
 
+var testMode = testMode || false;
+var notCreateMenu = notCreateMenu || false;
+
+
 function SendMessageToExtension(eventType, payload, callback) {
-    chrome.runtime.sendMessage({ type: eventType, payload: payload }, callback);
+    if (!testMode) {
+        chrome.runtime.sendMessage({ type: eventType, payload: payload }, callback);
+    }
 }
 
 function SendMessageToCurrentActiveTab(eventType, payload, callback) {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, { type: eventType, payload: payload }, callback);
-    });
+    if (!testMode) {
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, { type: eventType, payload: payload }, callback);
+        });
+    }
 }
 
 function AddEventListener(eventType, action) {
-    chrome.runtime.onMessage.addListener(
-        function (request, sender, sendResponse) {
-            if (!request.type || request.type != eventType) {
-                return;
-            }
+    if (!testMode) {
+        chrome.runtime.onMessage.addListener(
+            function (request, sender, sendResponse) {
+                if (!request.type || request.type != eventType) {
+                    return;
+                }
 
-            action(request.payload);
-        });
+                action(request.payload);
+            });
+    }
 }
 
-var notCreateMenu = notCreateMenu || false;
-if (!notCreateMenu) {
+if (!testMode && !notCreateMenu) {
 
     chrome.runtime.onInstalled.addListener(async () => {
         chrome.contextMenus.create({
@@ -139,7 +148,28 @@ function getHeadKpp() {
     }
 }
 
-if (!notCreateMenu) {
+function dateTimeToTicks(dateTime) {
+    var dateLocal = new Date(Date.parse(dateTime));
+    var ticks = ((new Date(Date.UTC(
+        dateLocal.getFullYear(),
+        dateLocal.getMonth(),
+        dateLocal.getDate(),
+        dateLocal.getHours(),
+        dateLocal.getMinutes(),
+        dateLocal.getSeconds(),
+        dateLocal.getMilliseconds()
+    )).getTime() * 10000) + 621355968000000000);
+    return ticks;
+}
+
+function ticksToDateTime(ticks) {
+    if (ticks < 621355968000000000) {
+        throw new Error("Can't convert " + ticks + " because it is less then 621355968000000000!");
+    }
+    return new Date((ticks - 621355968000000000) / 10000).toISOString();
+}
+
+if (!testMode && !notCreateMenu) {
     chrome.contextMenus.onClicked.addListener((item, tab) => {
         switch (item.menuItemId) {
             case NewGuidId: SendMessageToCurrentActiveTab(ReplaceTextEventId, uuidv4()); break;
