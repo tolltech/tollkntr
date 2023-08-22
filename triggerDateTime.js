@@ -15,8 +15,8 @@ function selectionHandlerFunction(event) {
     if (text.length == 0) return;
 
     var wasProcessed = false;
-    if (!isNaN(text)
-        || (text.length >= 6 && !isNaN(Date.parse(text))
+    if ((!isNaN(text) && text.length >= 14) // it is a long number ticks maybe
+        || (text.length >= 6 && !isNaN(Date.parse(text)) // it is a date maybe
         )
     ) {
         getKntr('dateticks/' + text, function (responseData) {
