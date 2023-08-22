@@ -35,7 +35,7 @@
       "*://*.kontur.ru/*",
      "*://*.testkontur.ru/*"
     ],
-    "js":      ["jquery.js", "constants.js", "background.js", "triggerHelper.js"]
+    "js":      ["jquery.js", "constants.js", "background.js", "triggerHelper.js", "triggerDateTime.js"]
   }
 ],
   "content_security_policy": {
