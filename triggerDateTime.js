@@ -12,12 +12,12 @@ function selectionHandlerFunction(event) {
     }
 
     var text = window.getSelection().toString();
-    if (text.length == 0) return;
+    if (text.length == 0 || text.length > 32) return;
 
     var wasProcessed = false;
-    if ((!isNaN(text) && text.length >= 14) // it is a long number ticks maybe
-        || (text.length >= 6 && !isNaN(Date.parse(text)) // it is a date maybe
-        )
+    if (
+        (!isNaN(text) && text.length >= 14) // it is a long number ticks maybe
+        || /^(((\d{4})-(\d{2})-(\d{2}))|((\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)))((-(\d{2}):(\d{2})|Z)?)$/.test(text) //iso date regex
     ) {
         getKntr('dateticks/' + text, function (responseData) {
             $('#ticks-convert-div').html(responseData);
