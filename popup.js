@@ -6,4 +6,7 @@ $(document).ready(function () {
             $('#ticks_label').html(responseData); 
         });       
     });
+
+    var manifestData = chrome.runtime.getManifest();
+    $('#version_div').html('v.' + manifestData.version);
 });
