@@ -34,7 +34,8 @@
     "matches": [
       "*://*.skbkontur.ru/*",
       "*://*.kontur.ru/*",
-     "*://*.testkontur.ru/*"
+     "*://*.testkontur.ru/*",
+     "*://*.kontur.host/*"
     ],
     "js":      ["jquery.js", "constants.js", "background.js", "triggerHelper.js", "triggerDateTime.js"]
   }
