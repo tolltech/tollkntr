@@ -25,7 +25,8 @@
      "*://billy-sentry.testkontur.ru/auth/login/*",
      "*://sentry.skbkontur.ru/auth/login/*",
      "*://jhub.skbkontur.ru/hub/auth/login*",
-     "*://yt-elba.skbkontur.ru/hub/hub/auth/login*"
+     "*://yt-elba.skbkontur.ru/hub/hub/auth/login*",
+     "*://sentry.kontur.host/*"
     ],
     "js":      ["jquery.js", "constants.js", "background.js", "triggerLogin.js"]
   },
