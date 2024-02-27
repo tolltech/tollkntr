@@ -31,4 +31,7 @@ $(document).on('keydown', function (e) {
     else {
         replaceSelectedText(document.activeElement, randomTextQueue[randomTextQueueInd]);
     }
+
+    const event = new Event('input', { bubbles: true });
+    input.dispatchEvent(event);
 });
