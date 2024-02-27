@@ -33,5 +33,5 @@ $(document).on('keydown', function (e) {
     }
 
     const event = new Event('input', { bubbles: true });
-    input.dispatchEvent(event);
+    document.activeElement.dispatchEvent(event);
 });
