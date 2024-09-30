@@ -35,3 +35,20 @@ $(document).on('keydown', function (e) {
     const event = new Event('input', { bubbles: true });
     document.activeElement.dispatchEvent(event);
 });
+
+AddEventListener('random_word_id', function (payload) {
+    randomTextQueueInd++;
+
+    if (randomTextQueue.length <= 0 || randomTextQueueInd >= randomTextQueue.length) {       
+        getKntr('randomtext/dummy', function(data){
+            var msg = data;
+            randomTextQueue.push(msg);
+            randomTextQueueInd = randomTextQueue.length - 1;
+
+            replaceSelectedText(document.activeElement, randomTextQueue[randomTextQueueInd]);
+        });
+    }
+    else {
+        replaceSelectedText(document.activeElement, randomTextQueue[randomTextQueueInd]);
+    }
+});

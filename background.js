@@ -2,7 +2,9 @@ var NewGuidId = "NewGuidId";
 var NewIpInn = "NewIpInn";
 var NewUlInn = "NewUlInn";
 var NewHeadKpp = "NewHeadKpp";
+var NewRandomWord = "NewRandomWord";
 var ReplaceTextEventId = "replace_text_id";
+var NewRandomWordEventId = "random_word_id";
 
 var testMode = testMode || false;
 var notCreateMenu = notCreateMenu || false;
@@ -72,6 +74,14 @@ if (!testMode && !notCreateMenu) {
         chrome.contextMenus.create({
             id: NewHeadKpp,
             title: 'new kpp',
+            type: 'normal',
+            contexts: ['editable'],
+            parentId: "toll_parent"
+        });
+
+        chrome.contextMenus.create({
+            id: NewRandomWord,
+            title: 'new random word',
             type: 'normal',
             contexts: ['editable'],
             parentId: "toll_parent"
@@ -176,6 +186,7 @@ if (!testMode && !notCreateMenu) {
             case NewIpInn: SendMessageToCurrentActiveTab(ReplaceTextEventId, getIPInn()); break;
             case NewUlInn: SendMessageToCurrentActiveTab(ReplaceTextEventId, getULInn()); break;
             case NewHeadKpp: SendMessageToCurrentActiveTab(ReplaceTextEventId, getHeadKpp()); break;
+            case NewRandomWord: SendMessageToCurrentActiveTab(NewRandomWordEventId); break;
         }
     });
 }
