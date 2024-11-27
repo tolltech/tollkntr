@@ -8,4 +8,9 @@ function replaceSelectedText(elem, text) {
     elem.value = elem.value.slice(0, start) + text + elem.value.substr(end);
     elem.selectionStart = start;
     elem.selectionEnd = elem.selectionStart + text.length;
+    elem.dispatchEvent(new Event('input'));
+    ["input", "click", "change", "blur"].forEach((event) => {
+        const changeEvent = new Event(event, { bubbles: true, cancelable: true });
+        elem.dispatchEvent(changeEvent);
+    });
 }
