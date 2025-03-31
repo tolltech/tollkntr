@@ -1,5 +1,5 @@
 var randomTextQueue = [];
-var randomTextQueueInd = 0;
+var randomTextQueueInd = -1;
 
 $(document).on('keydown', function (e) {
     var tag = e.target.tagName.toLowerCase();
@@ -52,3 +52,14 @@ AddEventListener('random_word_id', function (payload) {
         replaceSelectedText(document.activeElement, randomTextQueue[randomTextQueueInd]);
     }
 });
+
+try {
+    if (randomTextQueue.length <= 0) {
+        getKntr('randomtext/dummy', function(data){
+            var msg = data;
+            randomTextQueue.push(msg);
+        });
+    }
+} catch (error) {
+
+}
