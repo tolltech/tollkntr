@@ -207,7 +207,7 @@ function getKntr(url, callback){
         },
         error: function (responseData, textStatus, errorThrown) {
             // alert('error');
-            alert('POST failed.\r\n'
+            console.log('POST failed.\r\n'
                 + JSON.stringify(responseData) + '\r\n'
                 + JSON.stringify(textStatus) + '\r\n'
                 + JSON.stringify(errorThrown) + '\r\n'
