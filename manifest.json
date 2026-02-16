@@ -2,7 +2,7 @@
   "name": "TollKntr",
   "short_name":"TollKntr",
   "description": "Автоматический клик на кнопку Login на сайте sentry, jhub.skbkontur и другое",
-  "version": "1.1.16",
+  "version": "1.1.17",
   "action": {
       "default_title": "TollKntr",
       "default_icon": "icons/chrome.png",
@@ -21,13 +21,15 @@
   },
   "content_scripts": [{
     "matches": [
-      "*://billy-sentry.skbkontur.ru/auth/login/*",
+     "*://billy-sentry.skbkontur.ru/auth/login/*",
      "*://billy-sentry.testkontur.ru/auth/login/*",
      "*://sentry.skbkontur.ru/auth/login/*",
      "*://jhub.skbkontur.ru/hub/auth/login*",
      "*://yt-elba.skbkontur.ru/hub/hub/auth/login*",
      "*://sentry.kontur.host/*",
-	 "*://git.skbkontur.ru/users/sign_in*"
+     "*://chat.skbkontur.ru/login*",
+     "*://grafana.skbkontur.ru/login*",
+	   "*://git.skbkontur.ru/users/sign_in*"
     ],
     "js":      ["jquery.js", "constants.js", "background.js", "triggerLogin.js"]
   },
